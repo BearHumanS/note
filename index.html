@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="naver-site-verification" content="fcccb0ead3f74ffe4a8fe872dd89f4640b8c80d3" />
     <meta name="description" content="간단하게 사용가능한 웹 메모장">
     <meta property="og:type" content="website"> 
@@ -51,47 +54,47 @@
       }
     </style>
     <title>간단한 웹 메모장</title>
-  </head>
-  <body>
+</head>
+<body>
     <div class="notebook">
-      <textarea id="noteInput"></textarea>
-      <button class="btnSave">Save</button>
-      <ul id="noteList"></ul>
-    </div>
-    <script>
-      const noteInput = document.querySelector('#noteInput');
-      const btnSave = document.querySelector('.btnSave');
-      const noteList = document.querySelector('#noteList');
-
-  btnSave.addEventListener('click', function() {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    notes.push(noteInput.value);
-    localStorage.setItem('notes', JSON.stringify(notes));
-    renderNotes();
-    noteInput.value = '';
-  });
+        <textarea id="noteInput"></textarea>
+        <button class="btnSave">Save</button>
+        <ul id="noteList"></ul>
+      </div>
+      <script>
+        const noteInput = document.querySelector('#noteInput');
+        const btnSave = document.querySelector('.btnSave');
+        const noteList = document.querySelector('#noteList');
   
-  window.addEventListener('load', function() {
-    renderNotes();
-  });
-  
-  function renderNotes() {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    noteList.innerHTML = '';
-    notes.forEach(function(note, index) {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        ${note}
-        <button class="delete">Delete</button>
-      `;
-      li.querySelector('.delete').addEventListener('click', function() {
-        notes.splice(index, 1);
-        localStorage.setItem('notes', JSON.stringify(notes));
-        renderNotes();
-      });
-      noteList.appendChild(li);
+    btnSave.addEventListener('click', function() {
+      const notes = JSON.parse(localStorage.getItem('notes')) || [];
+      notes.push(noteInput.value);
+      localStorage.setItem('notes', JSON.stringify(notes));
+      renderNotes();
+      noteInput.value = '';
     });
-  }
-</script>
-  </body>
+    
+    window.addEventListener('load', function() {
+      renderNotes();
+    });
+    
+    function renderNotes() {
+      const notes = JSON.parse(localStorage.getItem('notes')) || [];
+      noteList.innerHTML = '';
+      notes.forEach(function(note, index) {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          ${note}
+          <button class="delete">Delete</button>
+        `;
+        li.querySelector('.delete').addEventListener('click', function() {
+          notes.splice(index, 1);
+          localStorage.setItem('notes', JSON.stringify(notes));
+          renderNotes();
+        });
+        noteList.appendChild(li);
+      });
+    }
+  </script>
+</body>
 </html>
