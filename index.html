@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="naver-site-verification" content="fcccb0ead3f74ffe4a8fe872dd89f4640b8c80d3" />
+    <style>
+      .notebook {
+        width: 800px;
+        height: 800px;
+        border: 1px solid black;
+        margin: 0 auto;
+        padding: 10px;
+        overflow: scroll;
+      }
+      .btnSave {
+        display: block;
+        margin: 10px auto;
+        padding: 10px 20px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #noteList {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      #noteList li {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+      }
+      #noteList .delete {
+        padding: 5px 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="notebook">
+      <textarea id="noteInput"></textarea>
+      <button class="btnSave">Save</button>
+      <ul id="noteList"></ul>
+    </div>
+    <script>
+      const noteInput = document.querySelector('#noteInput');
+      const btnSave = document.querySelector('.btnSave');
+      const noteList = document.querySelector('#noteList');
+
+  btnSave.addEventListener('click', function() {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    notes.push(noteInput.value);
+    localStorage.setItem('notes', JSON.stringify(notes));
+    renderNotes();
+    noteInput.value = '';
+  });
+  
+  window.addEventListener('load', function() {
+    renderNotes();
+  });
+  
+  function renderNotes() {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    noteList.innerHTML = '';
+    notes.forEach(function(note, index) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${note}
+        <button class="delete">Delete</button>
+      `;
+      li.querySelector('.delete').addEventListener('click', function() {
+        notes.splice(index, 1);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        renderNotes();
+      });
+      noteList.appendChild(li);
+    });
+  }
+</script>
+  </body>
+</html>
