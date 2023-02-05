@@ -13,3 +13,4 @@ btnClear.addEventListener('click', function() {
   notes.innerHTML = '';
   noteInput.value = '';
 });
+
